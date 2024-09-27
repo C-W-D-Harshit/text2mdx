@@ -67,7 +67,6 @@ export const metadata: Metadata = {
     "Markdown Conversion Tool",
     "MDX Conversion Tool",
   ],
-  viewport: "width=device-width, initial-scale=1.0",
   robots: "index, follow",
   openGraph: {
     title: "Text2MDX - AI-powered Markdown Converter",

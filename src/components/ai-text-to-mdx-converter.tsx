@@ -13,6 +13,7 @@ import {
 import { Loader2, Copy, Trash2, Upload, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import { convertTextToMDX } from "@/actions/convert";
 
 export default function Text2MDXConverter() {
   const [inputText, setInputText] = useState("");
@@ -45,7 +46,7 @@ export default function Text2MDXConverter() {
     []
   );
 
-  const handleConvert = useCallback(() => {
+  const handleConvert = useCallback(async () => {
     if (inputText.trim() === "") {
       toast.error("Please enter some text before converting.", {
         description: "The input field cannot be empty.",
@@ -56,21 +57,20 @@ export default function Text2MDXConverter() {
     setIsLoading(true);
     setShowOutput(false);
 
-    // Simulating API call delay
-    setTimeout(() => {
-      // This is where you would normally call your AI conversion function
-      setOutputMdx(
-        `# Converted MDX\n\n${inputText
-          .split("\n")
-          .map((line) => `- ${line}`)
-          .join("\n")}`
-      );
+    const response = await convertTextToMDX({ text: inputText });
+    if (response.error) {
       setIsLoading(false);
-      setShowOutput(true);
-      toast.success("Conversion complete", {
-        description: "Your text has been converted to MDX format.",
+      toast.error("Conversion failed", {
+        description: "There was an error converting the text to MDX.",
       });
-    }, 2000);
+      return;
+    }
+    setOutputMdx(response.mdxContent as string);
+    setIsLoading(false);
+    setShowOutput(true);
+    toast.success("Conversion complete", {
+      description: "Your text has been converted to MDX format.",
+    });
   }, [inputText]);
 
   const handleCopy = useCallback(() => {
