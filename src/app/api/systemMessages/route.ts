@@ -1,5 +1,3 @@
-// pages/api/systemMessages.js
-
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
