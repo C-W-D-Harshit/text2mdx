@@ -1,5 +1,5 @@
-import { AiTextToMdxConverter } from "@/components/ai-text-to-mdx-converter";
+import Text2MDXConverter from "@/components/ai-text-to-mdx-converter";
 
 export default function Home() {
-  return <AiTextToMdxConverter />;
+  return <Text2MDXConverter />;
 }

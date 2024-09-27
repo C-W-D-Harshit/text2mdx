@@ -12,14 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Loader2, Copy, Trash2, Upload, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
-export function AiTextToMdxConverter() {
+export default function Text2MDXConverter() {
   const [inputText, setInputText] = useState("");
   const [outputMdx, setOutputMdx] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showOutput, setShowOutput] = useState(false);
-  const { toast } = useToast();
 
   const handleFileUpload = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,10 +47,8 @@ export function AiTextToMdxConverter() {
 
   const handleConvert = useCallback(() => {
     if (inputText.trim() === "") {
-      toast({
-        title: "Empty input",
-        description: "Please enter some text before converting.",
-        variant: "destructive",
+      toast.error("Please enter some text before converting.", {
+        description: "The input field cannot be empty.",
       });
       return;
     }
@@ -70,40 +67,35 @@ export function AiTextToMdxConverter() {
       );
       setIsLoading(false);
       setShowOutput(true);
-      toast({
-        title: "Conversion complete",
+      toast.success("Conversion complete", {
         description: "Your text has been converted to MDX format.",
       });
     }, 2000);
-  }, [inputText, toast]);
+  }, [inputText]);
 
   const handleCopy = useCallback(() => {
     navigator.clipboard
       .writeText(outputMdx)
       .then(() => {
-        toast({
-          title: "Copied!",
+        toast.success("Copied!", {
           description: "The MDX content has been copied to your clipboard.",
         });
       })
       .catch(() => {
-        toast({
-          title: "Copy failed",
+        toast.error("Copy failed", {
           description: "There was an error copying the text. Please try again.",
-          variant: "destructive",
         });
       });
-  }, [outputMdx, toast]);
+  }, [outputMdx]);
 
   const handleClear = useCallback(() => {
     setInputText("");
     setOutputMdx("");
     setShowOutput(false);
-    toast({
-      title: "Cleared",
+    toast.info("Cleared", {
       description: "Input and output have been cleared.",
     });
-  }, [toast]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 text-gray-100">
@@ -114,15 +106,15 @@ export function AiTextToMdxConverter() {
         className="max-w-4xl mx-auto"
       >
         <motion.h1
-          className="text-4xl font-extrabold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+          className="text-5xl font-extrabold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 10 }}
         >
-          AI Text to MDX Converter
+          Text2MDX
         </motion.h1>
         <motion.p
-          className="text-center text-gray-400 mb-8"
+          className="text-center text-gray-400 mb-8 text-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
