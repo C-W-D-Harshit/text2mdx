@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Text2MDX - AI-powered Markdown Converter",
     description: "Convert text to MDX effortlessly with our AI-powered tool.",
-    url: "https://www.text2mdx.com",
+    url: "https://text2mdx.cleverdeveloper.in",
     type: "website",
     images: [
       {
-        url: "https://www.text2mdx.com/og-image.jpg",
+        url: "https://text2mdx.cleverdeveloper.in/og.png",
         width: 1200,
         height: 630,
         alt: "Text2MDX",
