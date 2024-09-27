@@ -33,5 +33,3 @@ export async function convertTextToMDX({ text }: { text: string }) {
     return { error: "Failed to convert text to MDX." };
   }
 }
-
-export const maxDuration = 60;
