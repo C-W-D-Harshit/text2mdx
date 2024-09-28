@@ -14,6 +14,7 @@ import { Loader2, Copy, Trash2, Upload, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { convertTextToMDX } from "@/actions/convert";
+import { Text2mdxFooter } from "./text2mdx-footer";
 
 export default function Text2MDXConverter() {
   const [inputText, setInputText] = useState("");
@@ -98,7 +99,7 @@ export default function Text2MDXConverter() {
   }, []);
 
   return (
-    <div className="min-h-dvh bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 text-gray-100">
+    <div className="min-h-dvh relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 text-gray-100">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -239,6 +240,7 @@ export default function Text2MDXConverter() {
           </CardContent>
         </Card>
       </motion.div>
+      <Text2mdxFooter />
     </div>
   );
 }
