@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Text2MDX
+
+Text2MDX is an AI-powered tool that converts plain text to MDX, helping users streamline content formatting for modern web applications.
+
+## Features
+
+- **AI-Powered Conversion:** Utilizes models from OpenRouter.ai for accurate text-to-MDX conversion.
+- **User-Friendly Interface:** Built with Next.js, Shadcn, Tailwind, and Framer for a responsive and visually appealing experience.
+- **Open Source:** Contributions are welcome to enhance functionality and usability.
+
+## Technologies Used
+
+- **Next.js**: Framework for server-rendered React applications.
+- **Prisma**: ORM for database management.
+- **Postgres**: Reliable relational database.
+- **Shadcn**: UI components for building modern interfaces.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Framer**: Design tool for animations and interactions.
+- **OpenRouter.ai**: AI models for text conversion.
 
 ## Getting Started
 
-First, run the development server:
+To get started with Text2MDX, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the Repository:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/c-w-d-harshit/text2mdx.git
+   cd text2mdx
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Install Dependencies:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. **Set Up Environment Variables:**
 
-To learn more about Next.js, take a look at the following resources:
+   Create a `.env` file in the root directory and add your environment variables.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Run the Development Server:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+5. **Open Your Browser:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Navigate to `http://localhost:3000` to see the application in action.
