@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://text2mdx.cleverdeveloper.in",
+      url: "https://text2mdx.com",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 1,
