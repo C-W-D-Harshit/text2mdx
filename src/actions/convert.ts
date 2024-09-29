@@ -2,27 +2,49 @@
 
 import openai from "@/lib/openai";
 import { PrismaClient } from "@prisma/client";
+import NodeCache from "node-cache";
 
 const prisma = new PrismaClient();
+const cache = new NodeCache();
 
 export async function convertTextToMDX({ text }: { text: string }) {
   try {
-    // first fetch system messages
-    const systemMessagesData = await prisma.systemMessage.findMany();
+    // Implement caching of system messages using Node Cache
+    const cacheKey = "systemMessages";
+    let systemMessages: { role: "system" | "user"; content: string }[] | null =
+      null;
 
-    // add role to each message
-    const systemMessages: {
-      role: "system" | "user";
-      content: string;
-    }[] = systemMessagesData.map((message) => ({
-      content: message.content,
-      role: "system",
-    }));
+    // Try to get cached system messages
+    systemMessages = cache.get(cacheKey) || null;
 
-    // then convert text to MDX
+    if (!systemMessages) {
+      console.log("Fetching system messages from the database");
+      // Fetch system messages from the database
+      const systemMessagesData = await prisma.systemMessage.findMany();
+
+      // Add role to each message
+      systemMessages = systemMessagesData.map((message) => ({
+        content: message.content,
+        role: "system",
+      }));
+
+      // Cache the system messages
+      cache.set(cacheKey, systemMessages);
+    } else {
+      console.log("Fetching system messages from the cache");
+    }
+
+    // Then convert text to MDX
     const openaiResponse = await openai.chat.completions.create({
       model: "openai/gpt-4o-mini",
-      messages: [...systemMessages, { role: "user", content: text }],
+      // model: "google/gemma-2-9b-it:free",
+      messages: [
+        ...systemMessages,
+        {
+          role: "user",
+          content: `This is the text that we have to convert: ${text}`,
+        },
+      ],
     });
 
     const mdxContent = openaiResponse.choices[0].message.content;

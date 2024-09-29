@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -98,13 +98,21 @@ export default function Text2MDXConverter() {
     });
   }, []);
 
+  const outputRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showOutput && outputRef.current) {
+      console.log("scrolling");
+      outputRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showOutput]);
   return (
     <div className="min-h-dvh relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 text-gray-100">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto"
+        className="max-w-4xl mx-auto mb-16 lg:mb-0"
       >
         <motion.h1
           className="text-5xl font-extrabold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
@@ -209,6 +217,7 @@ export default function Text2MDXConverter() {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  ref={outputRef as React.RefObject<HTMLDivElement>}
                 >
                   <div className="flex justify-between items-center">
                     <label
