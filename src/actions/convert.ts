@@ -11,6 +11,13 @@ export async function convertTextToMDX({ text }: { text: string }) {
   try {
     // Implement caching of system messages using Node Cache
     const cacheKey = "systemMessages";
+    const textCacheKey = `text:${text}`;
+    const cachedMDX = cache.get(textCacheKey);
+
+    if (cachedMDX) {
+      console.log("Returning cached MDX content");
+      return { mdxContent: cachedMDX };
+    }
     let systemMessages: { role: "system" | "user"; content: string }[] | null =
       null;
 
@@ -48,6 +55,7 @@ export async function convertTextToMDX({ text }: { text: string }) {
     });
 
     const mdxContent = openaiResponse.choices[0].message.content;
+    cache.set(textCacheKey, mdxContent);
     return { mdxContent };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
