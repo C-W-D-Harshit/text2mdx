@@ -12,7 +12,7 @@ export function Text2mdxFooter() {
       transition={{ delay: 0.5, duration: 0.5 }}
     >
       <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center">
-        <p className="text-sm mb-4 sm:mb-0">
+        <p className="text-sm mb-2 sm:mb-0">
           © {new Date().getFullYear()} Text2MDX. All rights reserved.
         </p>
         <motion.a
