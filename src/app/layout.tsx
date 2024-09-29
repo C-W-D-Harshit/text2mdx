@@ -66,7 +66,8 @@ export const metadata: Metadata = {
   robots: "index, follow",
   openGraph: {
     title: "Text2MDX - AI-powered Markdown Converter",
-    description: "Convert text to MDX effortlessly with our AI-powered tool.",
+    description:
+      "Convert text to MD or MDX effortlessly with our AI-powered tool.",
     url: "https://text2mdx.cleverdeveloper.in",
     type: "website",
     images: [
