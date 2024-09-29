@@ -16,7 +16,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Text2MDX - AI-powered Markdown Converter",
-  description: "Convert text to MDX effortlessly with our AI-powered tool.",
+  description:
+    "Convert text to MD or MDX effortlessly with our AI-powered tool.",
   keywords: [
     "text to mdx",
     "text to mdx converter",
