@@ -71,3 +71,32 @@ export async function convertTextToMDX({ text }: { text: string }) {
     return { error: "Failed to convert text to MDX." };
   }
 }
+
+export const addConversion = async ({
+  ipAddress,
+  userAgent,
+}: {
+  ipAddress: string;
+  userAgent: string;
+}) => {
+  try {
+    await prisma.conversion.create({
+      data: {
+        ipAddress: ipAddress,
+        userAgent: userAgent,
+      },
+    });
+  } catch (error: unknown) {
+    console.error("Failed to add conversion", error);
+  }
+};
+
+export const getNumberOfConversions = async () => {
+  try {
+    const count = await prisma.conversion.count();
+    return count;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error: unknown) {
+    return 0;
+  }
+};

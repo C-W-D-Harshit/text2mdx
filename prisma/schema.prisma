@@ -19,3 +19,16 @@ model SystemMessage {
   content String
   createdAt DateTime @default(now())
 }
+
+model Analytics {
+  id             Int      @id @default(autoincrement())
+  conversionCount Int
+  createdAt      DateTime @default(now())
+}
+
+model Conversion {
+  id        Int      @id @default(autoincrement())
+  ipAddress String
+  userAgent String
+  createdAt DateTime @default(now())
+}

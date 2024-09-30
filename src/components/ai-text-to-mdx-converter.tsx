@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
@@ -13,9 +14,14 @@ import {
 import { Loader2, Copy, Trash2, Upload, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import { convertTextToMDX } from "@/actions/convert";
+import {
+  addConversion,
+  convertTextToMDX,
+  getNumberOfConversions,
+} from "@/actions/convert";
 import { Text2mdxFooter } from "./text2mdx-footer";
 import React from "react";
+import CountUp from "react-countup";
 
 const CHARACTER_LIMIT = Number(process.env.NEXT_PUBLIC_CHARACTER_LIMIT) || 3500;
 
@@ -24,6 +30,46 @@ export default function Text2MDXConverter() {
   const [outputMdx, setOutputMdx] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showOutput, setShowOutput] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [conversionCount, setConversionCount] = useState(0);
+  const [userInfo, setUserInfo] = useState({ ip: "", userAgent: "" });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      // Fetch IP address from an external service
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        const ip = data.ip;
+
+        // Get the user agent
+        const userAgent = navigator.userAgent;
+
+        setUserInfo({ ip, userAgent });
+      } catch (error) {
+        console.error("Failed to fetch user info:", error);
+      }
+    };
+
+    if (mounted) fetchUserInfo();
+  }, [mounted]);
+
+  useEffect(() => {
+    const fetchConversionCount = async () => {
+      // Simulating an API call
+      const response = await getNumberOfConversions();
+      const count = response < 87 ? 87 : response;
+      setConversionCount(count);
+      setShowAnimation(true);
+    };
+
+    fetchConversionCount();
+  }, []);
 
   const handleFileUpload = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,10 +119,22 @@ export default function Text2MDXConverter() {
     setOutputMdx(response.mdxContent as string);
     setIsLoading(false);
     setShowOutput(true);
+    setConversionCount((prevCount) => {
+      const newCount = prevCount + 1;
+      setShowAnimation(false);
+      setTimeout(() => {
+        setShowAnimation(true);
+      }, 50);
+      return newCount;
+    });
     toast.success("Conversion complete", {
       description: "Your text has been converted to MDX format.",
     });
-  }, [inputText]);
+    await addConversion({
+      ipAddress: userInfo.ip,
+      userAgent: userInfo.userAgent,
+    });
+  }, [inputText, userInfo]);
 
   const handleCopy = useCallback(() => {
     navigator.clipboard
@@ -137,6 +195,32 @@ export default function Text2MDXConverter() {
         >
           Transform your text into MDX with the power of AI
         </motion.p>
+        {/* <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-8 text-center"
+        >
+          <h2 className="text-2xl font-bold text-gray-100 mb-2">
+            Total Conversions
+          </h2>
+          {showAnimation ? (
+            <CountUp
+              start={0}
+              end={conversionCount}
+              duration={1}
+              separator=","
+              useEasing={true}
+              useGrouping={true}
+              className="text-4xl font-extrabold text-blue-400"
+            />
+          ) : (
+            <span className="text-4xl font-extrabold text-blue-400">
+              {conversionCount.toLocaleString()}
+            </span>
+          )}
+          <p className="text-sm text-gray-400 mt-2">and counting!</p>
+        </motion.div> */}
         <Card className="bg-gray-800 border-gray-700 shadow-xl overflow-hidden">
           <CardHeader className="border-b border-gray-700">
             <CardTitle className="text-2xl font-bold text-center text-gray-100">
