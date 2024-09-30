@@ -15,6 +15,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { convertTextToMDX } from "@/actions/convert";
 import { Text2mdxFooter } from "./text2mdx-footer";
+import React from "react";
+
+const CHARACTER_LIMIT = Number(process.env.NEXT_PUBLIC_CHARACTER_LIMIT) || 3500;
 
 export default function Text2MDXConverter() {
   const [inputText, setInputText] = useState("");
@@ -41,7 +44,8 @@ export default function Text2MDXConverter() {
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setInputText(e.target.value);
+      const text = e.target.value;
+      setInputText(text);
       setShowOutput(false);
     },
     []
@@ -106,6 +110,9 @@ export default function Text2MDXConverter() {
       outputRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [showOutput]);
+
+  const remainingChars = CHARACTER_LIMIT - inputText.length; // Calculate remaining characters
+
   return (
     <div className="min-h-dvh relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 text-gray-100">
       <motion.div
@@ -189,11 +196,25 @@ export default function Text2MDXConverter() {
                 placeholder="Enter or paste your text here..."
                 className="min-h-[200px] resize-none bg-gray-700 text-gray-100 placeholder-gray-500 border-gray-600 focus:border-blue-500 focus:ring-blue-500"
               />
+              {remainingChars < 100 && (
+                <motion.p
+                  className="text-sm text-red-400"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {remainingChars} characters remaining
+                </motion.p>
+              )}
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 onClick={handleConvert}
-                disabled={isLoading || inputText.trim() === ""}
+                disabled={
+                  isLoading ||
+                  inputText.trim() === "" ||
+                  inputText.length > CHARACTER_LIMIT
+                }
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white"
               >
                 {isLoading ? (
@@ -234,14 +255,14 @@ export default function Text2MDXConverter() {
                       className="bg-gray-700 hover:bg-gray-600 text-gray-200"
                     >
                       <Copy className="mr-2 h-4 w-4" />
-                      Copy MDX
+                      Copy
                     </Button>
                   </div>
                   <Textarea
                     id="output-mdx"
                     value={outputMdx}
                     readOnly
-                    className="min-h-[200px] resize-none bg-gray-700 text-gray-100 placeholder-gray-500 border-gray-600"
+                    className="min-h-[200px] resize-none bg-gray-700 text-gray-100 placeholder-gray-500 border-gray-600 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </motion.div>
               )}

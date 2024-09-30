@@ -6,9 +6,17 @@ import NodeCache from "node-cache";
 
 const prisma = new PrismaClient();
 const cache = new NodeCache();
+const CHARACTER_LIMIT = Number(process.env.NEXT_PUBLIC_CHARACTER_LIMIT) || 3500;
 
 export async function convertTextToMDX({ text }: { text: string }) {
   try {
+    // Implement character limit check
+    if (text.length > CHARACTER_LIMIT) {
+      return {
+        error: `The text exceeds the character limit of ${CHARACTER_LIMIT}.`,
+      };
+    }
+
     // Implement caching of system messages using Node Cache
     const cacheKey = "systemMessages";
     const textCacheKey = `text:${text}`;
