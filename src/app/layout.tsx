@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -105,6 +106,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <GoogleAnalytics gaId="G-50LGCCPZB6" />
         {children}
         <Toaster
           theme="dark"
