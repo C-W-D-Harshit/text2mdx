@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     "Convert text to MD or MDX effortlessly with our AI-powered tool.",
   keywords: [
     "text to mdx",
+    "text to mdx online",
     "text to mdx converter",
     "markdown to mdx",
     "markdown to mdx converter",
