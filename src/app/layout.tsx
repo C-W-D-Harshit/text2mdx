@@ -17,9 +17,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.text2mdx.com"),
   title: "Text2MDX - AI-powered Markdown Converter",
   description:
     "Convert text to MD or MDX effortlessly with our AI-powered tool.",
+  authors: {
+    name: "Harshit Sharma",
+  },
   keywords: [
     "text to mdx",
     "text to mdx online",
@@ -71,16 +75,25 @@ export const metadata: Metadata = {
     title: "Text2MDX - AI-powered Markdown Converter",
     description:
       "Convert text to MD or MDX effortlessly with our AI-powered tool.",
-    url: "https://text2mdx.cleverdeveloper.in",
+    url: "https://www.text2mdx.com",
     type: "website",
     images: [
       {
-        url: "https://text2mdx.cleverdeveloper.in/og.png",
+        url: "https://www.text2mdx.com/og.png",
         width: 1200,
         height: 630,
         alt: "Text2MDX",
       },
     ],
+    siteName: "Text2MDX",
+    locale: "en_US",
+  },
+  icons: { apple: "/og.png" },
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/en-US",
+    },
   },
   twitter: {
     card: "summary_large_image",
