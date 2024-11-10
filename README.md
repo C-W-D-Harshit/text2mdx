@@ -35,16 +35,22 @@ To get started with Text2MDX, follow these steps:
    npm install
    ```
 
-3. **Set Up Environment Variables:**
+3. **Push Prisma Schema to Database:**
+
+   ```bash
+   npx prisma db push
+   ```
+
+4. **Set Up Environment Variables:**
 
    Create a `.env` file in the root directory and add your environment variables.
 
-4. **Run the Development Server:**
+5. **Run the Development Server:**
 
    ```bash
    npm run dev
    ```
 
-5. **Open Your Browser:**
+6. **Open Your Browser:**
 
    Navigate to `http://localhost:3000` to see the application in action.
