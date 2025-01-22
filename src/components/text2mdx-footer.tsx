@@ -24,7 +24,10 @@ export function Text2mdxFooter() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Coffee className="mr-2 text-lg text-yellow-600" />
+          <Coffee
+            className="mr-2 text-yellow-600 hover:text-yellow-500"
+            size={20}
+          />
           Buy me a coffee
         </motion.a>
         <motion.a
