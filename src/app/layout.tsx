@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Suspense } from "react";
+import { CSPostHogProvider } from "@/components/providers/PosthogProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -120,20 +121,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GoogleAnalytics gaId="G-50LGCCPZB6" />
-        {children}
-        <Toaster
-          theme="dark"
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "#2D3748",
-              color: "#E2E8F0",
-              border: "1px solid #4A5568",
-            },
-          }}
-        />
-        <Analytics />
+        <Suspense>
+          <CSPostHogProvider>
+            <GoogleAnalytics gaId="G-50LGCCPZB6" />
+            {children}
+            <Toaster
+              theme="dark"
+              position="bottom-right"
+              toastOptions={{
+                style: {
+                  background: "#2D3748",
+                  color: "#E2E8F0",
+                  border: "1px solid #4A5568",
+                },
+              }}
+            />
+          </CSPostHogProvider>
+        </Suspense>
       </body>
     </html>
   );

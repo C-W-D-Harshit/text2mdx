@@ -2,6 +2,7 @@
 
 import { FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { Coffee } from "lucide-react";
 
 export function Text2mdxFooter() {
   return (
@@ -15,6 +16,17 @@ export function Text2mdxFooter() {
         <p className="text-sm mb-2 sm:mb-0">
           © {new Date().getFullYear()} Text2MDX. All rights reserved.
         </p>
+        <motion.a
+          href="https://www.buymeacoffee.com/cwd.harshit"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center text-sm hover:text-white transition-colors duration-200"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Coffee className="mr-2 text-lg text-yellow-600" />
+          Buy me a coffee
+        </motion.a>
         <motion.a
           href="https://github.com/c-w-d-harshit/text2mdx"
           target="_blank"
